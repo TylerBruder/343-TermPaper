@@ -1,0 +1,67 @@
+package main
+import (
+"bufio"
+"fmt"
+"os"
+"strings"
+"strconv"
+)
+//Referenced Roomates calculator code for Go
+//running total calculator
+//This program does not allow spaces between input
+func main() {
+fmt.Println("Enter 'help' for help and 'quit' to quit")
+//Condition used to keep the loop going
+forCond := true
+//our running total
+var total float64 = 0
+//input reader
+reader := bufio.NewReader(os.Stdin)
+//unless the user types quit, keep running
+for forCond{
+//get input
+fmt.Print("> ")
+text, _ := reader.ReadString('\n')
+text = strings.TrimRight(text, "\n")
+//check for keywords
+if(text == "quit"){
+break
+} else if(text == "help"){
+fmt.Println("Usage: [option][number]")
+fmt.Println("Options: + - * /")
+continue
+}
+//out opperand
+opp := string(text[0])
+//remove the opperand
+text = strings.TrimLeft(text, opp)
+//convert it to a number if possible
+num, err := strconv.ParseFloat(text, 64)
+//check if the input was a number
+if(err == nil){
+//if it was a number do math!
+if(opp == "+"){
+total = total + num
+}else if opp == "-"{
+total = total - num
+
+}else if opp == "*"{
+total = total * num
+}else if opp == "/"{
+//divide by zero
+if(num == 0){
+fmt.Println("Enter valid input")
+continue
+}
+total = total / num
+}
+}else{
+fmt.Println("Enter valid input")
+continue
+}
+//print out the total
+fmt.Println()
+fmt.Println("Total: ", total)
+}
+fmt.Println("Your total was: ", total)
+}
